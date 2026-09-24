@@ -3,7 +3,8 @@ import {createRoot} from 'react-dom/client';
 import {HashRouter} from 'react-router-dom';
 import './styles.css';
 
-const root=document.getElementById('root');
+const rootElement=document.getElementById('root');
+const root=createRoot(rootElement);
 
 const Loading=()=>(
   <div className="center">
@@ -30,20 +31,17 @@ class AppErrorBoundary extends React.Component{
   }
 }
 
-root.innerHTML='';
-createRoot(root).render(<Loading/>);
+root.render(<Loading/>);
 
 import('./App').then(({default:App})=>{
-  root.innerHTML='';
-  createRoot(root).render(
+  root.render(
     <HashRouter>
       <AppErrorBoundary><App/></AppErrorBoundary>
     </HashRouter>
   );
 }).catch(error=>{
   console.error('GestiPro boot error',error);
-  root.innerHTML='';
-  createRoot(root).render(
+  root.render(
     <div className="center"><div className="panel" style={{maxWidth:650,margin:24}}>
       <h2>GestiPro — impossible de charger</h2>
       <p style={{color:'#64748b',lineHeight:1.6}}>{error?.message||'Erreur JavaScript au démarrage.'}</p>
